@@ -4,7 +4,7 @@
 // @version      0.2.0
 // @description  一键保存京东、天猫高清头图
 // @author       ykcory
-// @license MIT
+// @license      MIT
 // @match        *://item.jd.com/*
 // @match        *://detail.tmall.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
