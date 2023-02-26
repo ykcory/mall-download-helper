@@ -1,10 +1,11 @@
 // ==UserScript==
-// @name         mall-download-helper
+// @name         电商图片下载助手-京东|天猫
 // @namespace    https://github.com/ykcory
 // @version      0.1
-// @description  try to take over the world!
+// @description  一键保存京东、天猫高清头图
 // @author       ykcory
-// @match        *://(item.jd.com|detail.tmall.com)/*
+// @match        *://item.jd.com/*
+// @match        *://detail.tmall.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
 // ==/UserScript==
@@ -15,38 +16,40 @@
   const isJd = currentHref.includes("item.jd.com");
   const isTm = currentHref.includes("detail.tmall.com");
   if (isJd) {
-    jdDownload()
+    jdDownload();
   }
   if (isTm) {
-    tmDownload()
+    tmDownload();
   }
 
   /**
-     * 京东图片下载
-     */
+   * 京东图片下载
+   */
   function jdDownload() {
-    const leftBtns = document.querySelector(".preview-wrap .left-btns");
+    const leftBtns = querySelector(".preview-wrap .left-btns");
     // 添加下载图片按钮
-    const downTopImgBtn = createATag("下载当前图片")
+    const downTopImgBtn = createATag("下载图片");
+    console.log(downTopImgBtn);
     leftBtns.appendChild(downTopImgBtn);
     downTopImgBtn.addEventListener("click", () => {
-      const img = document.querySelector(".preview-wrap #spec-img");
-      const imgUrl = img.src;
-      const bigImgUrl = imgUrl.replace("n1", "n12");
-      window.open(bigImgUrl);
+      const imgList = querySelectorAll(".preview-wrap .spec-list li img");
+      imgList.forEach((img) => {
+        const imgUrl = img.src.replace("n5", "n12");
+        window.open(imgUrl);
+      });
     });
     // 添加下载视频按钮
-    const downVideoBtn = createATag("下载视频")
+    const downVideoBtn = createATag("下载视频");
     leftBtns.appendChild(downVideoBtn);
     downVideoBtn.addEventListener("click", () => {
       // 播放视频
-      const previewBtn = document.querySelector(
+      const previewBtn = querySelector(
         ".preview-wrap .preview-btn .video-icon"
       );
       previewBtn.click();
       // 获取播放按钮
       setTimeout(() => {
-        const video = document.querySelector(
+        const video = querySelector(
           ".preview-wrap .J-v-player #video-player_html5_api source"
         );
         if (video) {
@@ -58,15 +61,44 @@
   /**
    * 天猫图片下载
    */
-  function tmDownload(){
-    console.log("天猫")
+  function tmDownload() {
+    const picGalleryRoot = querySelector("[class|=PicGallery--root]");
+    const downBtnsWrap = createElement("div");
+    picGalleryRoot.appendChild(downBtnsWrap);
+    const downTopImgBtn = createATag("下载图片");
+    downBtnsWrap.appendChild(downTopImgBtn);
+    downTopImgBtn.addEventListener("click", () => {
+      const imgList = querySelectorAll(
+        "[class|=PicGallery--thumbnails] li img"
+      );
+      imgList.forEach((img) => {
+        console.log(img);
+        const imgUrl = img.src.replace(/(.*\.jpg).*\.jpg.*/, "$1");
+        window.open(imgUrl);
+      });
+    });
   }
   /**
    * 创建 a 标签
    */
-  function createATag(innerText){
-    const aTag = document.createElement("a");
+
+  function createElement(tagName) {
+    return document.createElement(tagName);
+  }
+
+  function createATag(innerText) {
+    const aTag = createElement("a");
     aTag.href = "javascript:void(0)";
     aTag.innerText = innerText;
+    return aTag;
+  }
+  /**
+   * 简化 querySelector
+   */
+  function querySelector(selectors) {
+    return document.querySelector(selectors);
+  }
+  function querySelectorAll(selectors) {
+    return document.querySelectorAll(selectors);
   }
 })();
