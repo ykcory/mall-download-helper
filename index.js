@@ -2,11 +2,12 @@
 // @name         电商图片下载助手-京东|天猫
 // @namespace    https://github.com/ykcory
 // @version      0.2.0
-// @description  一键保存京东、天猫高清头图
+// @description  一键保存京东、天猫、淘宝高清头图
 // @author       ykcory
 // @license      MIT
 // @match        *://item.jd.com/*
 // @match        *://detail.tmall.com/*
+// @match        *://item.taobao.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
 // ==/UserScript==
@@ -16,13 +17,16 @@
   const currentHref = window.location.href;
   const isJd = currentHref.includes("item.jd.com");
   const isTm = currentHref.includes("detail.tmall.com");
+  const isTb = currentHref.includes("item.taobao.com");
   if (isJd) {
     jdDownload();
   }
   if (isTm) {
     tmDownload();
   }
-
+  if (isTb) {
+    tbDownload();
+  }
   /**
    * 京东图片下载
    */
@@ -30,7 +34,6 @@
     const leftBtns = querySelector(".preview-wrap .left-btns");
     // 添加下载图片按钮
     const downTopImgBtn = createATag("下载图片");
-    console.log(downTopImgBtn);
     leftBtns.appendChild(downTopImgBtn);
     downTopImgBtn.addEventListener("click", () => {
       const imgList = querySelectorAll(".preview-wrap .spec-list li img");
@@ -73,16 +76,29 @@
         "[class|=PicGallery--thumbnails] li img"
       );
       imgList.forEach((img) => {
-        console.log(img);
         const imgUrl = img.src.replace(/(.*\.jpg).*\.jpg.*/, "$1");
         window.open(imgUrl);
       });
     });
   }
   /**
+   * 淘宝图片下载
+   */
+  function tbDownload() {
+    const btnsWrap = querySelector("#J_Social")
+    const downTopBtn = createATag("下载图片");
+    btnsWrap.appendChild(downTopBtn);
+    downTopBtn.addEventListener("click",()=>{
+      const imgList = querySelectorAll("#J_UlThumb li img")
+      imgList.forEach((img) => {
+        const imgUrl = img.src.replace(/(.*\.jpg).*\.jpg.*/, "$1");
+        window.open(imgUrl);
+      });
+    })
+  }
+  /**
    * 创建 a 标签
    */
-
   function createElement(tagName) {
     return document.createElement(tagName);
   }
