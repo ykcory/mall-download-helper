@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         电商图片下载助手-京东|天猫
 // @namespace    https://github.com/ykcory
-// @version      0.2.0
+// @version      0.3.0
 // @description  一键保存京东、天猫、淘宝高清头图
 // @author       ykcory
 // @license      MIT
