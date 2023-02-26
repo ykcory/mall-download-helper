@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         电商图片下载助手-京东|天猫
 // @namespace    https://github.com/ykcory
-// @version      0.1
+// @version      0.2.0
 // @description  一键保存京东、天猫高清头图
 // @author       ykcory
+// @license MIT
 // @match        *://item.jd.com/*
 // @match        *://detail.tmall.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
