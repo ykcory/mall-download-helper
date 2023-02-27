@@ -1,32 +1,29 @@
-// ==UserScript==
-// @name         电商图片下载助手-京东|天猫｜淘宝
-// @namespace    https://github.com/ykcory
-// @version      0.3.0
-// @description  一键保存京东、天猫、淘宝高清头图
-// @author       ykcory
-// @license      MIT
-// @match        *://item.jd.com/*
-// @match        *://detail.tmall.com/*
-// @match        *://item.taobao.com/*
-// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
-// @grant        none
-// ==/UserScript==
-
 (function () {
-  "use strict";
-  const currentHref = window.location.href;
-  const isJd = currentHref.includes("item.jd.com");
-  const isTm = currentHref.includes("detail.tmall.com");
-  const isTb = currentHref.includes("item.taobao.com");
-  if (isJd) {
-    jdDownload();
-  }
-  if (isTm) {
-    tmDownload();
-  }
-  if (isTb) {
-    tbDownload();
-  }
+  'use strict';
+
+  /**
+     * 创建 a 标签
+     */
+  function createElement(tagName) {
+      return document.createElement(tagName);
+    }
+
+  function createATag(innerText) {
+      const aTag = createElement("a");
+      aTag.href = "javascript:void(0)";
+      aTag.innerText = innerText;
+      return aTag;
+    }
+    /**
+     * 简化 querySelector
+     */
+  function querySelector(selectors) {
+      return document.querySelector(selectors);
+    }
+  function querySelectorAll(selectors) {
+      return document.querySelectorAll(selectors);
+    }
+
   /**
    * 京东图片下载
    */
@@ -47,9 +44,7 @@
     leftBtns.appendChild(downVideoBtn);
     downVideoBtn.addEventListener("click", () => {
       // 播放视频
-      const previewBtn = querySelector(
-        ".preview-wrap .preview-btn .video-icon"
-      );
+      const previewBtn = querySelector(".preview-wrap .preview-btn .video-icon");
       previewBtn.click();
       // 获取播放按钮
       setTimeout(() => {
@@ -62,60 +57,55 @@
       }, 500);
     });
   }
+
   /**
    * 天猫图片下载
    */
-  function tmDownload() {
+  function tmallDownload() {
     const picGalleryRoot = querySelector("[class|=PicGallery--root]");
     const downBtnsWrap = createElement("div");
     picGalleryRoot.appendChild(downBtnsWrap);
     const downTopImgBtn = createATag("下载图片");
     downBtnsWrap.appendChild(downTopImgBtn);
     downTopImgBtn.addEventListener("click", () => {
-      const imgList = querySelectorAll(
-        "[class|=PicGallery--thumbnails] li img"
-      );
+      const imgList = querySelectorAll("[class|=PicGallery--thumbnails] li img");
       imgList.forEach((img) => {
         const imgUrl = img.src.replace(/(.*\.jpg).*\.jpg.*/, "$1");
         window.open(imgUrl);
       });
     });
   }
+
   /**
    * 淘宝图片下载
    */
-  function tbDownload() {
-    const btnsWrap = querySelector("#J_Social")
+  function taobaoDownload() {
+    const btnsWrap = querySelector("#J_Social");
     const downTopBtn = createATag("下载图片");
     btnsWrap.appendChild(downTopBtn);
-    downTopBtn.addEventListener("click",()=>{
-      const imgList = querySelectorAll("#J_UlThumb li img")
+    downTopBtn.addEventListener("click", () => {
+      const imgList = querySelectorAll("#J_UlThumb li img");
       imgList.forEach((img) => {
         const imgUrl = img.src.replace(/(.*\.jpg).*\.jpg.*/, "$1");
         window.open(imgUrl);
       });
-    })
-  }
-  /**
-   * 创建 a 标签
-   */
-  function createElement(tagName) {
-    return document.createElement(tagName);
+    });
   }
 
-  function createATag(innerText) {
-    const aTag = createElement("a");
-    aTag.href = "javascript:void(0)";
-    aTag.innerText = innerText;
-    return aTag;
+  // ==UserScript==
+
+  const currentHref = window.location.href;
+  const isJd = currentHref.includes("item.jd.com");
+  const isTm = currentHref.includes("detail.tmall.com");
+  const isTb = currentHref.includes("item.taobao.com");
+  if (isJd) {
+      jdDownload();
   }
-  /**
-   * 简化 querySelector
-   */
-  function querySelector(selectors) {
-    return document.querySelector(selectors);
+  if (isTm) {
+      tmallDownload();
   }
-  function querySelectorAll(selectors) {
-    return document.querySelectorAll(selectors);
+  if (isTb) {
+      taobaoDownload();
   }
+
 })();
