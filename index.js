@@ -1,3 +1,18 @@
+
+// ==UserScript==
+// @name         电商图片下载助手-京东|天猫｜淘宝
+// @namespace    https://github.com/ykcory/mall-download-helper
+// @version      0.4.0
+// @description  一键保存京东、天猫、淘宝高清头图
+// @author       ykcory
+// @license      MIT
+// @match        *://item.jd.com/*
+// @match        *://detail.tmall.com/*
+// @match        *://item.taobao.com/*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// ==/UserScript==
+
 (function () {
   'use strict';
 

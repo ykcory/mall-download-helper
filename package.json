@@ -1,6 +1,7 @@
 {
   "name": "mall-download-helper",
-  "version": "0.3.0",
+  "version": "0.4.0",
+  "title": "电商图片下载助手-京东|天猫｜淘宝",
   "description": "一键保存京东、天猫、淘宝高清头图",
   "main": "index.js",
   "type": "module",
