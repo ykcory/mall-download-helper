@@ -1,1 +1,6 @@
-export {createElement,createATag,querySelector,querySelectorAll} from "./module/dom"
+export {
+  createElement,
+  createATag,
+  querySelector,
+  querySelectorAll,
+} from "./module/dom";

@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         电商图片下载助手-京东|天猫｜淘宝
 // @namespace    https://github.com/ykcory/mall-download-helper
-// @version      0.4.0
+// @version      0.4.1
 // @description  一键保存京东、天猫、淘宝高清头图
 // @author       ykcory
 // @license      MIT
@@ -95,19 +95,33 @@
    * 淘宝图片下载
    */
   function taobaoDownload() {
-    const btnsWrap = querySelector("#J_Social");
+    window.setTimeout(() => {
+      if (querySelector("[class^=mainPicWrap--]")) {
+        topImgDownload();
+      } else {
+        taobaoDownload();
+      }
+    }, 1000);
+  }
+
+  function topImgDownload() {
+    let btnsWrap = querySelector("[class^=picGallery--]");
     const downTopBtn = createATag("下载图片");
+    downTopBtn.style.position = "absolute";
+    downTopBtn.style.bottom = "-10px";
+    downTopBtn.style.left = "100px";
+
     btnsWrap.appendChild(downTopBtn);
     downTopBtn.addEventListener("click", () => {
-      const imgList = querySelectorAll("#J_UlThumb li img");
+      const imgList = querySelectorAll("[class^=picGallery--] ul li img");
       imgList.forEach((img) => {
-        const imgUrl = img.src.replace(/(.*\.jpg).*\.jpg.*/, "$1");
+        const baseSrc = img.src;
+        let imgUrl = baseSrc.replace("img", "gw");
+        imgUrl = baseSrc.replace("_.webp", "");
         window.open(imgUrl);
       });
     });
   }
-
-  // ==UserScript==
 
   const currentHref = window.location.href;
   const isJd = currentHref.includes("item.jd.com");
