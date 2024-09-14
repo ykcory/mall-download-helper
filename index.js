@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         电商图片下载助手-京东|天猫｜淘宝
 // @namespace    https://github.com/ykcory/mall-download-helper
-// @version      0.4.1
+// @version      0.4.2
 // @description  一键保存京东、天猫、淘宝高清头图
 // @author       ykcory
 // @license      MIT
@@ -74,24 +74,6 @@
   }
 
   /**
-   * 天猫图片下载
-   */
-  function tmallDownload() {
-    const picGalleryRoot = querySelector("[class|=PicGallery--root]");
-    const downBtnsWrap = createElement("div");
-    picGalleryRoot.appendChild(downBtnsWrap);
-    const downTopImgBtn = createATag("下载图片");
-    downBtnsWrap.appendChild(downTopImgBtn);
-    downTopImgBtn.addEventListener("click", () => {
-      const imgList = querySelectorAll("[class|=PicGallery--thumbnails] li img");
-      imgList.forEach((img) => {
-        const imgUrl = img.src.replace(/(.*\.jpg).*\.jpg.*/, "$1");
-        window.open(imgUrl);
-      });
-    });
-  }
-
-  /**
    * 淘宝图片下载
    */
   function taobaoDownload() {
@@ -130,10 +112,7 @@
   if (isJd) {
       jdDownload();
   }
-  if (isTm) {
-      tmallDownload();
-  }
-  if (isTb) {
+  if (isTb || isTm) {
       taobaoDownload();
   }
 
