@@ -19,10 +19,30 @@ export default function taobaoDownload() {
 
 function topImgDownload() {
   let btnsWrap = querySelector("[class^=picGallery--]");
+
+  const downVideoBtn = createATag("下载视频");
+  downVideoBtn.style.position = "absolute";
+  downVideoBtn.style.bottom = "-12px";
+  downVideoBtn.style.right = "100px";
+  btnsWrap.appendChild(downVideoBtn);
+
+  const topImg = querySelectorAll("[class^=picGallery--] ul li")[0];
+  downVideoBtn.addEventListener("click", () => {
+    topImg.click()
+    setTimeout(() => {
+      const video = querySelector(
+        "[class^=mainPicVideo--] video"
+      );
+      if (video) {
+        window.open(video.src);
+      }
+    }, 500);
+  });
+
   const downTopBtn = createATag("下载图片");
   downTopBtn.style.position = "absolute";
-  downTopBtn.style.bottom = "-10px";
-  downTopBtn.style.left = "100px";
+  downTopBtn.style.bottom = "-12px";
+  downTopBtn.style.right = "150px";
 
   btnsWrap.appendChild(downTopBtn);
   downTopBtn.addEventListener("click", () => {

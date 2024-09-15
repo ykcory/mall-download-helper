@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         电商图片下载助手-京东|天猫｜淘宝
 // @namespace    https://github.com/ykcory/mall-download-helper
-// @version      0.4.2
+// @version      0.4.3
 // @description  一键保存京东、天猫、淘宝高清头图
 // @author       ykcory
 // @license      MIT
@@ -88,10 +88,30 @@
 
   function topImgDownload() {
     let btnsWrap = querySelector("[class^=picGallery--]");
+
+    const downVideoBtn = createATag("下载视频");
+    downVideoBtn.style.position = "absolute";
+    downVideoBtn.style.bottom = "-12px";
+    downVideoBtn.style.right = "100px";
+    btnsWrap.appendChild(downVideoBtn);
+
+    const topImg = querySelectorAll("[class^=picGallery--] ul li")[0];
+    downVideoBtn.addEventListener("click", () => {
+      topImg.click();
+      setTimeout(() => {
+        const video = querySelector(
+          "[class^=mainPicVideo--] video"
+        );
+        if (video) {
+          window.open(video.src);
+        }
+      }, 500);
+    });
+
     const downTopBtn = createATag("下载图片");
     downTopBtn.style.position = "absolute";
-    downTopBtn.style.bottom = "-10px";
-    downTopBtn.style.left = "100px";
+    downTopBtn.style.bottom = "-12px";
+    downTopBtn.style.right = "150px";
 
     btnsWrap.appendChild(downTopBtn);
     downTopBtn.addEventListener("click", () => {
