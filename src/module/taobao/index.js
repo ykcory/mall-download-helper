@@ -11,6 +11,7 @@ export default function taobaoDownload() {
   window.setTimeout(() => {
     if (querySelector("[class^=mainPicWrap--]")) {
       topImgDownload();
+      downloadSkuImg();
     } else {
       taobaoDownload();
     }
@@ -28,11 +29,9 @@ function topImgDownload() {
 
   const topImg = querySelectorAll("[class^=picGallery--] ul li")[0];
   downVideoBtn.addEventListener("click", () => {
-    topImg.click()
+    topImg.click();
     setTimeout(() => {
-      const video = querySelector(
-        "[class^=mainPicVideo--] video"
-      );
+      const video = querySelector("[class^=mainPicVideo--] video");
       if (video) {
         window.open(video.src);
       }
@@ -53,5 +52,28 @@ function topImgDownload() {
       imgUrl = baseSrc.replace("_.webp", "");
       window.open(imgUrl);
     });
+  });
+}
+
+function downloadSkuImg() {
+  const skuContentList = querySelectorAll("[class^=SkuContent--] [class^=skuItem--]");
+  skuContentList.forEach((skuContent) => {
+    const imgList = skuContent.querySelectorAll("img");
+    if(imgList.length){
+      skuContent.style.position = "relative"
+      const downSkuImgBtn = createATag("下载sku图片");
+      downSkuImgBtn.style.position = "absolute"
+      downSkuImgBtn.style.bottom = "-10px"
+      downSkuImgBtn.style.left = "75px"
+      skuContent.appendChild(downSkuImgBtn)
+
+      downSkuImgBtn.addEventListener("click", () => {
+        imgList.forEach((img) => {
+          const baseSrc = img.src;
+          const imgUrl = baseSrc.replace("_.webp", "");
+          window.open(imgUrl);
+        });
+      });
+    }
   });
 }

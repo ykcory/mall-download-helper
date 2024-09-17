@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         电商图片下载助手-京东|天猫｜淘宝
 // @namespace    https://github.com/ykcory/mall-download-helper
-// @version      0.4.3
+// @version      0.5.3
 // @description  一键保存京东、天猫、淘宝高清头图
 // @author       ykcory
 // @license      MIT
@@ -80,6 +80,7 @@
     window.setTimeout(() => {
       if (querySelector("[class^=mainPicWrap--]")) {
         topImgDownload();
+        downloadSkuImg();
       } else {
         taobaoDownload();
       }
@@ -99,9 +100,7 @@
     downVideoBtn.addEventListener("click", () => {
       topImg.click();
       setTimeout(() => {
-        const video = querySelector(
-          "[class^=mainPicVideo--] video"
-        );
+        const video = querySelector("[class^=mainPicVideo--] video");
         if (video) {
           window.open(video.src);
         }
@@ -122,6 +121,29 @@
         imgUrl = baseSrc.replace("_.webp", "");
         window.open(imgUrl);
       });
+    });
+  }
+
+  function downloadSkuImg() {
+    const skuContentList = querySelectorAll("[class^=SkuContent--] [class^=skuItem--]");
+    skuContentList.forEach((skuContent) => {
+      const imgList = skuContent.querySelectorAll("img");
+      if(imgList.length){
+        skuContent.style.position = "relative";
+        const downSkuImgBtn = createATag("下载sku图片");
+        downSkuImgBtn.style.position = "absolute";
+        downSkuImgBtn.style.bottom = "-10px";
+        downSkuImgBtn.style.left = "75px";
+        skuContent.appendChild(downSkuImgBtn);
+
+        downSkuImgBtn.addEventListener("click", () => {
+          imgList.forEach((img) => {
+            const baseSrc = img.src;
+            const imgUrl = baseSrc.replace("_.webp", "");
+            window.open(imgUrl);
+          });
+        });
+      }
     });
   }
 
