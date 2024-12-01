@@ -11,7 +11,7 @@ export default function jdDownload() {
   downTopImgBtn.addEventListener("click", () => {
     const imgList = querySelectorAll(".preview-wrap .spec-list li img");
     imgList.forEach((img) => {
-      const imgUrl = img.src.replace("n5", "n12");
+      const imgUrl = img.src.replace(/\/(n5|n0)\/s.+\_jfs/, "/n12/jfs");
       window.open(imgUrl);
     });
   });
@@ -35,31 +35,36 @@ export default function jdDownload() {
   // 下载详情页
   const descDownload = () => {
     setTimeout(() => {
-      const ssdModule = querySelector(".ssd-module-wrap");
-      if (ssdModule) {
+      const detailContent = querySelector("#J-detail-banner")
+      if (detailContent) {
         const downDetailBtn = createATag("下载详情页");
-        ssdModule.insertBefore(downDetailBtn, ssdModule.firstChild);
-        const alldiv = querySelectorAll(".ssd-module-wrap div")
-        const allBg = []
-        alldiv.forEach((item) => {
-          const style = getComputedStyle(item)
-          const bg = style.backgroundImage
-          if (bg) {
-            const regex = /url\("(.*?)"\)/;
-            const match = bg.match(regex);
-            if (match){
-              allBg.push(match[1])
-            }
-          }
-        })
+        detailContent.insertBefore(downDetailBtn, detailContent.firstChild);
+        const allImg = querySelectorAll("#J-detail-content img");
+        const allBg = querySelectorAll(".ssd-module-wrap .ssd-module");
         downDetailBtn.addEventListener("click", () => {
-          allBg.forEach((imgUrl) => {
-            window.open(imgUrl);
+          allImg.forEach((imgUrl) => {
+            if(imgUrl.dataset && imgUrl.dataset.lazyload){
+              window.open(imgUrl.dataset.lazyload);
+            }else{
+              window.open(imgUrl.currentSrc);
+            }
           });
+          allBg.forEach((item) => {
+            const style = getComputedStyle(item)
+            const bg = style.backgroundImage
+            if (bg) {
+              const regex = /url\("(.*?)"\)/;
+              const match = bg.match(regex);
+              if (match) {
+                window.open(match[1])
+              }
+            }
+          })
         });
       } else {
         descDownload()
       }
+
     }, 1000)
   }
   descDownload()
