@@ -12,6 +12,7 @@ export default function taobaoDownload() {
     if (querySelector("[class^=mainPicWrap--]")) {
       topImgDownload();
       downloadSkuImg();
+      taobalDescDownload()
     } else {
       taobaoDownload();
     }
@@ -76,4 +77,21 @@ function downloadSkuImg() {
       });
     }
   });
+}
+
+
+function taobalDescDownload(){
+  const container = querySelector("#container")
+  const downDetailBtn = createATag("下载详情页");
+  container.insertBefore(downDetailBtn, container.firstChild);
+  const allImg = querySelectorAll(".descV8-container img")
+  downDetailBtn.addEventListener("click",()=>{
+    allImg.forEach((imgUrl)=>{
+      if(imgUrl.dataset && imgUrl.dataset.src){
+        window.open(imgUrl.dataset.src);
+      }else{
+        window.open(imgUrl.currentSrc);
+      }
+    })
+  })
 }
