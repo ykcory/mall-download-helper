@@ -11,7 +11,7 @@ export default function jdDownload() {
   downTopImgBtn.addEventListener("click", () => {
     const imgList = querySelectorAll(".preview-wrap .spec-list li img");
     imgList.forEach((img) => {
-      const imgUrl = img.src.replace(/\/(n5|n0)\/s.+\_jfs/, "/n12/jfs");
+      const imgUrl = img.src.replace(/\/(n5|n0)\/.*\jfs/, "/n12/jfs");
       window.open(imgUrl);
     });
   });

@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         电商图片下载助手-京东|天猫｜淘宝
 // @namespace    https://github.com/ykcory/mall-download-helper
-// @version      0.7.0
+// @version      0.7.1
 // @description  一键保存京东、天猫、淘宝高清头图
 // @author       ykcory
 // @license      MIT
@@ -50,7 +50,7 @@
     downTopImgBtn.addEventListener("click", () => {
       const imgList = querySelectorAll(".preview-wrap .spec-list li img");
       imgList.forEach((img) => {
-        const imgUrl = img.src.replace(/\/(n5|n0)\/s.+\_jfs/, "/n12/jfs");
+        const imgUrl = img.src.replace(/\/(n5|n0)\/.*\jfs/, "/n12/jfs");
         window.open(imgUrl);
       });
     });
